@@ -1,5 +1,5 @@
 using System;
-					
+
 public static class CalendarHelper
 {
 
@@ -7,7 +7,7 @@ public static class CalendarHelper
     {
     }
 
-    private static DateTime SetToWorkingDayForward(DateTime adjustDate)
+    public static DateTime SetToWorkingDayForward(DateTime adjustDate)
     {
         int addDays = 0;
 
@@ -16,7 +16,7 @@ public static class CalendarHelper
             case DayOfWeek.Saturday:
                 addDays = 2;
                 break;
-            case adjustDate.Sunday:
+            case DayOfWeek.Sunday:
                 addDays = 1;
                 break;
         }
@@ -24,7 +24,7 @@ public static class CalendarHelper
         return adjustDate.Date.AddDays(addDays);
     }
 
-    private static DateTime SetToWorkingDayBackward(DateTime adjustDate)
+    public static DateTime SetToWorkingDayBackward(DateTime adjustDate)
     {
         int addDays = 0;
 
@@ -45,7 +45,7 @@ public static class CalendarHelper
     {
         if (duration == 0)
         {
-            return adjustDate
+            return adjustDate;
         }
 
         adjustDate = (duration > 0) ? SetToWorkingDayBackward(adjustDate)
@@ -62,12 +62,12 @@ public static class CalendarHelper
         endDate = SetToWorkingDayBackward(endDate);
 
         int totalDays = (endDate - startDate).Days;
-		int totalWeekEnds = (totalDays / 7);
+        int totalWeekEnds = (totalDays / 7);
         int lastWeekDays = (totalWeekEnds == 0 ? totalDays : (totalDays % 7)) + (int)startDate.DayOfWeek;
         totalWeekEnds += (lastWeekDays > 5 ? 1 : 0);
 
         // Working Days = (1 + Days between Start and End Dates) - (2 * WeekEnds between Start and End Dates)
         return (1 + totalDays) - (2 * totalWeekEnds);
     }
-    
+
 }

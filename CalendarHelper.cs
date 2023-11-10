@@ -2,43 +2,48 @@ using System;
 
 public static class CalendarHelper
 {
-
-    static CalendarHelper()
-    {
-    }
-
+    /// <summary>
+    /// Adjusts the date to the next working day.
+    /// </summary>
+    /// <param name="adjustDate">The date to adjust.</param>
+    /// <returns>The adjusted date.</returns>
     public static DateTime SetToWorkingDayForward(DateTime adjustDate)
     {
-        int addDays = 0;
+        int daysToAdjust = 0;
 
         switch (adjustDate.DayOfWeek)
         {
             case DayOfWeek.Saturday:
-                addDays = 2;
+                daysToAdjust = 2;
                 break;
             case DayOfWeek.Sunday:
-                addDays = 1;
+                daysToAdjust = 1;
                 break;
         }
 
-        return adjustDate.Date.AddDays(addDays);
+        return adjustDate.Date.AddDays(daysToAdjust);
     }
 
+    /// <summary>
+    /// Adjusts the date to the previous working day.
+    /// </summary>
+    /// <param name="adjustDate">The date to adjust.</param>
+    /// <returns>The adjusted date.</returns>
     public static DateTime SetToWorkingDayBackward(DateTime adjustDate)
     {
-        int addDays = 0;
+        int daysToAdjust = 0;
 
         switch (adjustDate.DayOfWeek)
         {
-            case DayOfWeek.Saturday:
-                addDays = -1;
-                break;
             case DayOfWeek.Sunday:
-                addDays = -2;
+                daysToAdjust = -2;
+                break;
+            case DayOfWeek.Monday:
+                daysToAdjust = -3;
                 break;
         }
 
-        return adjustDate.Date.AddDays(addDays);
+        return adjustDate.Date.AddDays(daysToAdjust);
     }
 
     public static DateTime AddWorkingDays(DateTime adjustDate, int duration)
